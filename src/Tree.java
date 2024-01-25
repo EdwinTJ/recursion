@@ -232,18 +232,21 @@ public class Tree<E extends Comparable<? super E>> {
      * @return String representation of ancestor
      */
     public BinaryNode<E> lca(BinaryNode<E> t,E a, E b) {
-
+    // Add return so I can run test
+        return null;
     }
     public Integer sumAll(){
         BinaryNode<Integer> r = (BinaryNode<Integer>) root;
         return sumAll(r);
     }
     public Integer sumAll(BinaryNode<Integer> t){
-
+        // Add return so I can run test
+        return null;
     }
 
     public E lca(E a, E b) {
-
+        // Add return so I can run test
+        return null;
     }
     /**
      * Balance the tree
