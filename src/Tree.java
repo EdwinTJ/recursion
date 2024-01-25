@@ -74,16 +74,20 @@ public class Tree<E extends Comparable<? super E>> {
         else
             return treeName + "\n" + toString(root, "");
     }
-
+    /**
+     * Helper method to build the string tree
+     * @param node BinaryNode<E>
+     * @param indent string
+     */
     private String toString(BinaryNode<E> node, String indent) {
         if (node == null)
             return "";
 
         // In-order traversal
         StringBuilder result = new StringBuilder();
-        result.append(toString(node.right, indent + "  "));  // Print right subtree
+        result.append(toString(node.right, indent + "  "));  // Print right
         result.append(indent + node.element + "\n");        // Print current node
-        result.append(toString(node.left, indent + "  "));   // Print left subtree
+        result.append(toString(node.left, indent + "  "));   // Print left
 
         return result.toString();
     }
