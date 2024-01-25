@@ -21,7 +21,7 @@ public class TreeTester {
         Tree<Integer> treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
         System.out.println(treeTwo.toString());
 
-        //Problem 2
+       /* //Problem 2
         treeTwo.flip();
         treeTwo.changeName("Tree Two Now flipped");
         System.out.println( treeTwo.toString());
@@ -107,6 +107,6 @@ public class TreeTester {
         treeBonus.buildTreeTraversals(inorder, preorder);
         treeBonus.changeName("TreeBonus built from inorder and preorder traversals");
         System.out.println(treeBonus.toString());
-
+*/
     }
 }

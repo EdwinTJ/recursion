@@ -72,7 +72,20 @@ public class Tree<E extends Comparable<? super E>> {
         if (root == null)
             return treeName + " Empty tree";
         else
-            return treeName + " Please write the code to print me";
+            return treeName + "\n" + toString(root, "");
+    }
+
+    private String toString(BinaryNode<E> node, String indent) {
+        if (node == null)
+            return "";
+
+        // In-order traversal
+        StringBuilder result = new StringBuilder();
+        result.append(toString(node.right, indent + "  "));  // Print right subtree
+        result.append(indent + node.element + "\n");        // Print current node
+        result.append(toString(node.left, indent + "  "));   // Print left subtree
+
+        return result.toString();
     }
     /**
      * Return a string displaying the tree contents as a single line
