@@ -1,6 +1,10 @@
 // ******************ERRORS********************************
 // Throws UnderflowException as appropriate
 import org.junit.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
+
 class UnderflowException extends RuntimeException {
     /**
      * Construct this exception object.
@@ -209,10 +213,43 @@ public class Tree<E extends Comparable<? super E>> {
      * The complexity of printAllPaths is O(???)
      */
     public void printAllPaths() {
+        printAllPaths(root, new ArrayList<>());
 
     }
+    /**
+     * Helper method to printAllPaths
+     * @param current the current node in the traversal.
+     * @param pathList the list to store the current path.
+     */
+    private void printAllPaths(BinaryNode<E> current, List<E> pathList) {
+        if (current == null) {
+            return;
+        }
 
+        // Add the current node to the path
+        pathList.add(current.element);
 
+        // Check if the current node is a leaf (both left and right children are null)
+        if (current.left == null && current.right == null) {
+            // Print the path when a leaf is reached
+            printPath(pathList);
+        } else {
+            // Recursively traverse the left and right subtrees
+            printAllPaths(current.left, new ArrayList<>(pathList));
+            printAllPaths(current.right, new ArrayList<>(pathList));
+        }
+    }
+    /**
+     * Helper method to printAllPaths
+     * @param pathList the list representing a path from root to leaf.
+     */
+    private void printPath(List<E> pathList) {
+        StringBuilder path = new StringBuilder();
+        for (E element : pathList) {
+            path.append(element).append(" ");
+        }
+        System.out.println(path.toString().trim());
+    }
     /**
      * Counts all non-null binary search trees embedded in tree
      *  The complexity of countBST is O(???)

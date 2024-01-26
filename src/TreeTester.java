@@ -34,22 +34,22 @@ public class TreeTester {
         Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
         System.out.println(treeThree.toString());
 
-        //Problem 3
+ /*       //Problem 3
         System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
         System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
 
 
-/*        //Problem 4
+        //Problem 4
         int mylevel=3;
         System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
         mylevel=4;
         System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
-
+*/
         //Problem 5
         System.out.println("All paths from treeThree");
         treeThree.printAllPaths();
 
-*/
+
 
  /*
 
