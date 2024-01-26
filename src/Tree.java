@@ -122,7 +122,33 @@ public class Tree<E extends Comparable<? super E>> {
      * @return
      */
     public E deepestNode() {
-        return null;
+        BinaryNode<E> deepest = deepestNode(root, 0);
+        return (deepest != null) ? deepest.element : null;    }
+    /**
+     * Helper method for deepestNode
+     * @param current current node traversal.
+     * @param currentLevel current level of current node.
+     * @return deepest node
+     */
+    private BinaryNode<E> deepestNode(BinaryNode<E> current,int currentLevel){
+        if (current == null) {
+            return null;
+        }
+        // Find the deepest node in left and right
+        BinaryNode<E> left = deepestNode(current.left, currentLevel + 1);
+        BinaryNode<E> right = deepestNode(current.right, currentLevel + 1);
+        
+        // Compare the level of left and right
+        if(left == null && right == null){
+            // If both are null, current is the deepest
+            return current;
+        } else if (left == null) {
+            return right;
+        } else if(right == null){
+            return left;
+        }else{
+            return ( left.element.compareTo(right.element) >= 0 ) ? left : right;
+        }
     }
 
     /**
