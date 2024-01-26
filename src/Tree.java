@@ -152,8 +152,31 @@ public class Tree<E extends Comparable<? super E>> {
      * @return count of number of nodes at specified level
      */
     public int nodesInLevel(int level) {
-        return 0;
+        return nodesInLevel(root, 0, level);
     }
+    /**
+     * Helper method for nodesInLevel
+     * @param current current node traversal.
+     * @param currentLevel current level of current node.
+     * @param targetLevel target level for counting nodes.
+     * @return count of number of nodes at specified level
+     */
+    private int nodesInLevel(BinaryNode<E> current, int currentLevel, int targetLevel) {
+        if (current == null) {
+            return 0;
+        }
+
+        if (currentLevel == targetLevel) {
+            //  count this node at level
+            return 1;
+        }
+        // Count nodes in the left and right
+        int leftCount = nodesInLevel(current.left, currentLevel + 1, targetLevel);
+        int rightCount = nodesInLevel(current.right, currentLevel + 1, targetLevel);
+
+        return leftCount + rightCount;
+    }
+
 
     /**
      * Print all paths from root to leaves

@@ -22,21 +22,21 @@ public class TreeTester {
         System.out.println(treeTwo.toString());
 
        //Problem 2
-        treeTwo.flip();
+     /*   treeTwo.flip();
         treeTwo.changeName("Tree Two Now flipped");
         System.out.println( treeTwo.toString());
         treeTwo.flip();   //Flip back
         treeTwo.changeName("TreeTwo");
         System.out.println(treeTwo.toString());
-
+*/
         final int SIZE = 10;
         Integer[] list3 = {111, 176, 67, 77, 112, 119, 120, 70, 92, 153};
         Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
         System.out.println(treeThree.toString());
- /*
+
         //Problem 3
-        System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
-        System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
+//        System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
+//        System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
 
 
         //Problem 4
@@ -48,7 +48,7 @@ public class TreeTester {
         //Problem 5
         System.out.println("All paths from treeThree");
         treeThree.printAllPaths();
-
+/*
 
         Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
         Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
