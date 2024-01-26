@@ -19,7 +19,7 @@ public class TreeTester {
 
         Integer[] list2 = {4,5,6,8,33,16,80,121,22,25, 36};
         Tree<Integer> treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
-        System.out.println(treeTwo.toString());
+//        System.out.println(treeTwo.toString());
 
        //Problem 2
      /*   treeTwo.flip();
@@ -31,8 +31,8 @@ public class TreeTester {
 */
         final int SIZE = 10;
         Integer[] list3 = {111, 176, 67, 77, 112, 119, 120, 70, 92, 153};
-        Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
-        System.out.println(treeThree.toString());
+//        Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
+//        System.out.println(treeThree.toString());
 
  /*       //Problem 3
         System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
@@ -44,18 +44,19 @@ public class TreeTester {
         System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
         mylevel=4;
         System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
-*/
+
         //Problem 5
         System.out.println("All paths from treeThree");
         treeThree.printAllPaths();
+*/
 
 
 
- /*
 
         Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
         Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
         //Problem 6
+        System.out.println(treeFour.toString());
         treeFour.pruneK(60);
         treeFour.changeName("treeFour after pruning 60");
         System.out.println(treeFour.toString());
@@ -64,7 +65,7 @@ public class TreeTester {
         treeTwo.pruneK(290);
         treeTwo.changeName("treeTwo after pruning 290");
         System.out.println(treeTwo.toString());
-
+/*
         //Problem 7
         System.out.println(treeOne.toString());
         System.out.println("treeOne Least Common Ancestor of (10,15) " + treeOne.lca((Integer) 10, 15) + ENDLINE);

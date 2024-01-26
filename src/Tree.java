@@ -326,7 +326,35 @@ public class Tree<E extends Comparable<? super E>> {
      * @param sum: minimum path sum allowed in final tree
      */
     public void pruneK(Integer sum) {
+        root = pruneK(root, 0, sum);
     }
+
+    private BinaryNode<E> pruneK(BinaryNode<E> current, int currentSum, Integer targetSum) {
+        if (current == null) {
+            return null;
+        }
+
+        // Update the current sum
+        currentSum += ((Integer) current.element);
+
+        // Check if the current node is a leaf (both left and right children are null)
+        if (current.left == null && current.right == null) {
+            // If the current path sum is less than the target sum, remove the node
+            if (currentSum < targetSum) {
+                return null;
+            } else {
+                return current;
+            }
+        } else {
+            // Recursively prune the left and right subtrees
+            current.left = pruneK(current.left, currentSum, targetSum);
+            current.right = pruneK(current.right, currentSum, targetSum);
+
+            // Return the modified current node
+            return current;
+        }
+    }
+
 
     /**
      * Build tree given inOrder and preOrder traversals.  Each value is unique
