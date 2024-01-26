@@ -371,9 +371,26 @@ public class Tree<E extends Comparable<? super E>> {
      * @param b second node
      * @return String representation of ancestor
      */
-    public BinaryNode<E> lca(BinaryNode<E> t,E a, E b) {
+    public BinaryNode<E> lca(BinaryNode<E> current,E a, E b) {
     // Add return so I can run test
-        return null;
+        if (current == null) {
+            return null;
+        }
+
+        // Compare the values of the current node with the given nodes a and b
+        int compareA = a.compareTo(current.element);
+        int compareB = b.compareTo(current.element);
+
+        if (compareA < 0 && compareB < 0) {
+            // Both a and b are in the left subtree
+            return lca(current.left, a, b);
+        } else if (compareA > 0 && compareB > 0) {
+            // Both a and b are in the right subtree
+            return lca(current.right, a, b);
+        } else {
+            // Current node is the LCA, or one of the nodes is equal to the current node
+            return current;
+        }
     }
     public Integer sumAll(){
         BinaryNode<Integer> r = (BinaryNode<Integer>) root;
@@ -384,10 +401,10 @@ public class Tree<E extends Comparable<? super E>> {
         return null;
     }
 
-    public E lca(E a, E b) {
-        // Add return so I can run test
-        return null;
+    public BinaryNode<E> lca(E a, E b) {
+        return lca(root, a, b);
     }
+
     /**
      * Balance the tree
      */

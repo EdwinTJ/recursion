@@ -48,7 +48,7 @@ public class TreeTester {
         //Problem 5
         System.out.println("All paths from treeThree");
         treeThree.printAllPaths();
-*/
+
 
 
 
@@ -65,14 +65,14 @@ public class TreeTester {
         treeTwo.pruneK(290);
         treeTwo.changeName("treeTwo after pruning 290");
         System.out.println(treeTwo.toString());
-/*
+*/
         //Problem 7
         System.out.println(treeOne.toString());
         System.out.println("treeOne Least Common Ancestor of (10,15) " + treeOne.lca((Integer) 10, 15) + ENDLINE);
         System.out.println("treeOne Least Common Ancestor of (55,61) " + treeOne.lca(55, 61) + ENDLINE);
         System.out.println("treeOne Least Common Ancestor of (9,50) " + treeOne.lca(9, 50) + ENDLINE);
         System.out.println("treeOne Least Common Ancestor of (29,62) " + treeOne.lca(29, 62) + ENDLINE);
-
+/*
         //Problem 8
         Integer[] v5 = {15, 1,2,3,5,10, 65, 66,67,68,83, 70, 90,69,6,8};
         Tree<Integer> treeFive = new Tree<Integer>(v5, "TreeFive:",true);
