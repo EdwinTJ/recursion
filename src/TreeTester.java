@@ -13,15 +13,15 @@ public class TreeTester {
         Integer[] list1 = {25, 10, 60, 55, 58, 56, 14, 63, 8, 50, 6, 9, 15,27,29,61};
         Tree<Integer> treeOne = new Tree<Integer>(list1, "TreeOne:",true);
     
-        //Problem 1
-        System.out.println(treeOne.toString());  //Print so it looks like a tree
-        System.out.println(treeOne.toString2());
+//        //Problem 1
+//        System.out.println(treeOne.toString());  //Print so it looks like a tree
+//        System.out.println(treeOne.toString2());
 
         Integer[] list2 = {4,5,6,8,33,16,80,121,22,25, 36};
         Tree<Integer> treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
         System.out.println(treeTwo.toString());
 
-       /* //Problem 2
+       //Problem 2
         treeTwo.flip();
         treeTwo.changeName("Tree Two Now flipped");
         System.out.println( treeTwo.toString());
@@ -33,7 +33,7 @@ public class TreeTester {
         Integer[] list3 = {111, 176, 67, 77, 112, 119, 120, 70, 92, 153};
         Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
         System.out.println(treeThree.toString());
-
+ /*
         //Problem 3
         System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
         System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());

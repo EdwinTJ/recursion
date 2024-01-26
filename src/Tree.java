@@ -133,7 +133,16 @@ public class Tree<E extends Comparable<? super E>> {
         flip(root);
     }
     private void flip(BinaryNode<E>t){
- 
+        if (t == null) return;
+
+        BinaryNode<E> temp = t.left;
+        // Swap left and right childrens
+        t.left = t.right;
+        t.right = temp;
+
+        // Recursively flip left and right subtree
+        flip(t.left);
+        flip(t.right);
     }
 
     /**
