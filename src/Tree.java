@@ -409,7 +409,44 @@ public class Tree<E extends Comparable<? super E>> {
      * Balance the tree
      */
     public void balanceTree() {
-        //root = balanceTree(root);
+        // Get the sorted elements of the tree using in-order traversal
+        List<E> sortedElements = new ArrayList<>();
+        inOrderTraversal(root, sortedElements);
+
+        // Build a balanced BST from the sorted elements
+        root = buildBalancedBST(sortedElements, 0, sortedElements.size() - 1);
+    }
+    /**
+     * Helper method for balanceTree
+     * @param node current node traversal.
+     * @param elements the list to store the sorted elements.
+     */
+    private void inOrderTraversal(BinaryNode<E> node, List<E> elements) {
+        if (node != null) {
+            inOrderTraversal(node.left, elements);
+            elements.add(node.element);
+            inOrderTraversal(node.right, elements);
+        }
+    }
+    /**
+     * Helper method for balanceTree
+     * @param elements the list of sorted elements.
+     * @param start the start of the list.
+     * @param end the end of the list.
+     * @return the root of the balanced BST.
+     */
+    private BinaryNode<E> buildBalancedBST(List<E> elements, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        int mid = (start + end) / 2;
+        BinaryNode<E> newNode = new BinaryNode<>(elements.get(mid));
+
+        newNode.left = buildBalancedBST(elements, start, mid - 1);
+        newNode.right = buildBalancedBST(elements, mid + 1, end);
+
+        return newNode;
     }
 
     /**
