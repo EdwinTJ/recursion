@@ -28,13 +28,13 @@ public class TreeTester {
         treeTwo.flip();   //Flip back
         treeTwo.changeName("TreeTwo");
         System.out.println(treeTwo.toString());
-*/
+
         final int SIZE = 10;
         Integer[] list3 = {111, 176, 67, 77, 112, 119, 120, 70, 92, 153};
 //        Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
 //        System.out.println(treeThree.toString());
 
- /*       //Problem 3
+      //Problem 3
         System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
         System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
 
@@ -72,27 +72,30 @@ public class TreeTester {
         System.out.println("treeOne Least Common Ancestor of (55,61) " + treeOne.lca(55, 61) + ENDLINE);
         System.out.println("treeOne Least Common Ancestor of (9,50) " + treeOne.lca(9, 50) + ENDLINE);
         System.out.println("treeOne Least Common Ancestor of (29,62) " + treeOne.lca(29, 62) + ENDLINE);
-*/
+
         //Problem 8
         Integer[] v5 = {15, 1,2,3,5,10, 65, 66,67,68,83, 70, 90,69,6,8};
         Tree<Integer> treeFive = new Tree<Integer>(v5, "TreeFive:",true);
-        System.out.println(treeFive.toString());
-        treeFive.balanceTree();
-        treeFive.changeName("treeFive after balancing");
-        System.out.println(treeFive.toString());
-/*
+//        System.out.println(treeFive.toString());
+//        treeFive.balanceTree();
+//        treeFive.changeName("treeFive after balancing");
+//        System.out.println(treeFive.toString());
+
         //Problem 9
-        System.out.println(treeOne.toString());
-        treeOne.keepRange(14, 50);
-        treeOne.changeName("treeOne after keeping only nodes between 14 and 50");
-        System.out.println(treeOne.toString());
+        Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
+        Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
 
-
-        treeFive.changeName("treeFive");
-        System.out.println(treeFive.toString());
-        treeFive.keepRange(3, 69);
-        treeFive.changeName("treeFive after keeping only nodes between 3  and 69");
-        System.out.println(treeFive.toString());
+//        System.out.println(treeOne.toString());
+//        treeOne.keepRange(14, 50);
+//        treeOne.changeName("treeOne after keeping only nodes between 14 and 50");
+//        System.out.println(treeOne.toString());
+//
+//
+//        treeFive.changeName("treeFive");
+//        System.out.println(treeFive.toString());
+//        treeFive.keepRange(3, 69);
+//        treeFive.changeName("treeFive after keeping only nodes between 3  and 69");
+//        System.out.println(treeFive.toString());
 
         // Problem 10
         treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
@@ -102,7 +105,7 @@ public class TreeTester {
         treeFour = new Tree<Integer>(list4, "treeFour", false);
         System.out.println(treeFour.toString());
         System.out.println("treeFour Contains BST: " + treeFour.countBST());
-
+*/
         //Bonus
 
         Integer[] inorder = {4, 2, 1, 7, 5, 8, 3, 6};
@@ -111,6 +114,6 @@ public class TreeTester {
         treeBonus.buildTreeTraversals(inorder, preorder);
         treeBonus.changeName("TreeBonus built from inorder and preorder traversals");
         System.out.println(treeBonus.toString());
-*/
+
     }
 }

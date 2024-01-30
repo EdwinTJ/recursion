@@ -260,8 +260,43 @@ public class Tree<E extends Comparable<? super E>> {
      * @return Count of embedded binary search trees
      */
     public Integer countBST() {
-        if (root == null) return 0;
-        return -1;
+        return countBST(root).count;
+    }
+
+    private CountBSTResult countBST(BinaryNode<E> current) {
+        if (current == null) {
+            return new CountBSTResult(0, null, null, true);
+        }
+
+        CountBSTResult leftResult = countBST(current.left);
+        CountBSTResult rightResult = countBST(current.right);
+
+        if (leftResult.isBST && rightResult.isBST &&
+                (leftResult.maxValue == null || leftResult.maxValue.compareTo(current.element) < 0) &&
+                (rightResult.minValue == null || rightResult.minValue.compareTo(current.element) > 0)) {
+            // If the current subtree is a BST, increment the count
+            int totalCount = 1 + leftResult.count + rightResult.count;
+            E minValue = (leftResult.minValue == null) ? current.element : leftResult.minValue;
+            E maxValue = (rightResult.maxValue == null) ? current.element : rightResult.maxValue;
+            return new CountBSTResult(totalCount, minValue, maxValue, true);
+        } else {
+            // If the current subtree is not a BST, return a result indicating that
+            return new CountBSTResult(leftResult.count + rightResult.count, null, null, false);
+        }
+    }
+
+    private class CountBSTResult {
+        int count;      // Number of BSTs in the subtree
+        E minValue;     // Minimum value in the subtree
+        E maxValue;     // Maximum value in the subtree
+        boolean isBST;  // Whether the subtree is a BST
+
+        CountBSTResult(int count, E minValue, E maxValue, boolean isBST) {
+            this.count = count;
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+            this.isBST = isBST;
+        }
     }
 
     /**
@@ -366,8 +401,35 @@ public class Tree<E extends Comparable<? super E>> {
      * @param preOrder List of tree nodes in preorder
      */
     public void buildTreeTraversals(E[] inOrder, E[] preOrder) {
-        root = null;
+        if (inOrder.length != preOrder.length) {
+            throw new IllegalArgumentException("Input arrays must have the same length");
+        }
+
+        root = buildTreeTraversals(inOrder, preOrder, 0, inOrder.length - 1, 0);
     }
+    private BinaryNode<E> buildTreeTraversals(E[] inOrder, E[] preOrder, int inStart, int inEnd, int preIndex) {
+        if (inStart > inEnd || preIndex >= preOrder.length) {
+            return null;
+        }
+
+        BinaryNode<E> node = new BinaryNode<>(preOrder[preIndex]);
+
+        int inIndex = findIndex(inOrder, inStart, inEnd, node.element);
+
+        node.left = buildTreeTraversals(inOrder, preOrder, inStart, inIndex - 1, preIndex + 1);
+        node.right = buildTreeTraversals(inOrder, preOrder, inIndex + 1, inEnd, preIndex + inIndex - inStart + 1);
+
+        return node;
+    }
+    private int findIndex(E[] arr, int start, int end, E value) {
+        for (int i = start; i <= end; i++) {
+            if (arr[i].equals(value)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     /**
      * Find the least common ancestor of two nodes
