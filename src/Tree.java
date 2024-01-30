@@ -76,22 +76,26 @@ public class Tree<E extends Comparable<? super E>> {
         if (root == null)
             return treeName + " Empty tree";
         else
-            return treeName + "\n" + toString(root, "");
+            return treeName + "\n" + toString(root, "", true);
     }
     /**
      * Helper method to build the string tree
      * @param node BinaryNode<E>
      * @param indent string
+     * @param isRight   flag to indicate if the node is a right child
      */
-    private String toString(BinaryNode<E> node, String indent) {
-        if (node == null)
+    private String toString(BinaryNode<E> node, String indent, boolean isRight) {
+        if (node == null) {
             return "";
+        }
 
         // In-order traversal
         StringBuilder result = new StringBuilder();
-        result.append(toString(node.right, indent + "  "));  // Print right
-        result.append(indent + node.element + "\n");        // Print current node
-        result.append(toString(node.left, indent + "  "));   // Print left
+        result.append(toString(node.right, indent + (isRight ? "        " : " |      "), true));  // Print right
+        result.append(indent);                                                                     // Print current node
+        result.append(isRight ? " / " : " \\ ");                                                  // Print current node
+        result.append(node.element + "\n");                                                        // Print current node
+        result.append(toString(node.left, indent + (isRight ? " |      " : "        "), false));  // Print left
 
         return result.toString();
     }
@@ -456,8 +460,34 @@ public class Tree<E extends Comparable<? super E>> {
      * @param b highest value
      */
     public void keepRange(E a, E b) {
-    }
+        root = keepRange(root, a, b);
 
+    }
+    /**
+     * Helper method for keepRange
+     *
+     * @param current current node traversal.
+     * @param a       lowest value
+     * @param b       highest value
+     * @return the root of the tree after keeping only nodes between the range [a, b]
+     */
+    private BinaryNode<E> keepRange(BinaryNode<E> current, E a, E b) {
+        if (current == null) {
+            return null;
+        }
+
+        if (current.element.compareTo(a) < 0) {
+            return keepRange(current.right, a, b);
+        }
+        else if (current.element.compareTo(b) > 0) {
+            return keepRange(current.left, a, b);
+        }
+        else {
+            current.left = keepRange(current.left, a, b);
+            current.right = keepRange(current.right, a, b);
+            return current;
+        }
+    }
     // Basic node stored in unbalanced binary  trees
     public static class BinaryNode<E> {
         E element;            // The data in the node
