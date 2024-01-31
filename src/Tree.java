@@ -82,24 +82,51 @@ public class Tree<E extends Comparable<? super E>> {
     /**
      * Helper method to build the string tree
      * @param node BinaryNode<E>
-     * @param indent string
-     * @param isRight   flag to indicate if the node is a right child
+     * @param indent String Current Level
+     * @param isRight   Indicate if the node is a right child
+     * @return String representation of tree
      */
     private String toString(BinaryNode<E> node, String indent, boolean isRight) {
+        // Base case: If the current node is null, return an empty string
         if (node == null) {
             return "";
         }
 
-        // In-order traversal
+        // StringBuilder to build the resulting string
         StringBuilder result = new StringBuilder();
-        result.append(toString(node.right, indent + (isRight ? "        " : " |      "), true));  // Print right
-        result.append(indent);                                                                     // Print current node
-        result.append(isRight ? " / " : " \\ ");                                                  // Print current node
-        result.append(node.element + "\n");                                                        // Print current node
-        result.append(toString(node.left, indent + (isRight ? " |      " : "        "), false));  // Print left
 
+        // Recursively build the string for the right subtree
+        String rightSubtree;
+        if (isRight) {
+            rightSubtree = toString(node.right, indent + "        ", true);
+        } else {
+            rightSubtree = toString(node.right, indent + " |      ", true);
+        }        result.append(rightSubtree);  // Print right
+
+        result.append(indent);
+
+        // Append a representation of the link between the current node and its parent
+        if (isRight) {
+            result.append(" / ");
+        } else {
+            result.append(" \\ ");
+        }
+
+        // Append the value of the current node and a newline character
+        result.append(node.element + "\n");  // Print current node
+
+        // Recursively build the string for the left subtree
+        String leftSubtree;
+        if (isRight) {
+            leftSubtree = toString(node.left, indent + " |      ", false);
+        } else {
+            leftSubtree = toString(node.left, indent + "        ", false);
+        }        result.append(leftSubtree);  // Print left
+
+        // Return the final string representation of the subtree
         return result.toString();
     }
+
 
     /**
      * Return a string displaying the tree contents as a single line
@@ -134,6 +161,7 @@ public class Tree<E extends Comparable<? super E>> {
     public E deepestNode() {
         BinaryNode<E> deepest = deepestNode(root, 0);
         return (deepest != null) ? deepest.element : null;    }
+
     /**
      * Helper method for deepestNode
      * @param current current node traversal.
@@ -157,29 +185,38 @@ public class Tree<E extends Comparable<? super E>> {
         } else if(right == null){
             return left;
         }else{
+            // If both not null, return higher level
             return ( left.element.compareTo(right.element) >= 0 ) ? left : right;
         }
     }
 
+
     /**
-     * The complexity of finding the flip is O(???)
+     * The complexity of finding the flip is O(n)
      * reverse left and right children recursively
      */
     public void flip() {
         flip(root);
     }
-    private void flip(BinaryNode<E>t){
-        if (t == null) return;
 
-        BinaryNode<E> temp = t.left;
+    /**
+     * Helper method to recursively reverse the left and right children of a subtree rooted at the given node.
+     *
+     * @param node The root of the current subtree being flipped.
+     */
+    private void flip(BinaryNode<E> node){
+        if (node == null) return;
+
+        BinaryNode<E> temp = node.left;
         // Swap left and right childrens
-        t.left = t.right;
-        t.right = temp;
+        node.left = node.right;
+        node.right = temp;
 
         // Recursively flip left and right subtree
-        flip(t.left);
-        flip(t.right);
+        flip(node.left);
+        flip(node.right);
     }
+
 
     /**
      * Counts number of nodes in specified level
@@ -190,12 +227,13 @@ public class Tree<E extends Comparable<? super E>> {
     public int nodesInLevel(int level) {
         return nodesInLevel(root, 0, level);
     }
+
     /**
      * Helper method for nodesInLevel
      * @param current current node traversal.
      * @param currentLevel current level of current node.
      * @param targetLevel target level for counting nodes.
-     * @return count of number of nodes at specified level
+     * @return Count - of number of nodes at specified level
      */
     private int nodesInLevel(BinaryNode<E> current, int currentLevel, int targetLevel) {
         if (current == null) {
@@ -245,6 +283,7 @@ public class Tree<E extends Comparable<? super E>> {
             printAllPaths(current.right, new ArrayList<>(pathList));
         }
     }
+
     /**
      * Helper method to printAllPaths
      * @param pathList the list representing a path from root to leaf.
@@ -256,6 +295,8 @@ public class Tree<E extends Comparable<? super E>> {
         }
         System.out.println(path.toString().trim());
     }
+
+
     /**
      * Counts all non-null binary search trees embedded in tree
      *  The complexity of countBST is O(n)
@@ -265,11 +306,18 @@ public class Tree<E extends Comparable<? super E>> {
         return countBST(root).count;
     }
 
+    /**
+     * Helper method for countBST.
+     *
+     * @param current The current node
+     * @return CountBSTResult information of binary search trees in the subtree.
+     */
     private CountBSTResult countBST(BinaryNode<E> current) {
         if (current == null) {
             return new CountBSTResult(0, null, null, true);
         }
 
+        // Process the left and right subtrees
         CountBSTResult leftResult = countBST(current.left);
         CountBSTResult rightResult = countBST(current.right);
 
@@ -287,6 +335,10 @@ public class Tree<E extends Comparable<? super E>> {
         }
     }
 
+    /**
+     * Helper class for countBST
+     * Result class to store information about the binary search trees in a subtree.
+     */
     private class CountBSTResult {
         int count;      // Number of BSTs in the subtree
         E minValue;     // Minimum value in the subtree
@@ -300,6 +352,7 @@ public class Tree<E extends Comparable<? super E>> {
             this.isBST = isBST;
         }
     }
+
 
     /**
      * Insert into a bst tree; duplicates are allowed
@@ -322,6 +375,8 @@ public class Tree<E extends Comparable<? super E>> {
         if (t == null)
             return new BinaryNode<E>(x, null, null);
         int compareResult = x.compareTo(t.element);
+
+        // Insert x into the left or right subtree
         if (compareResult < 0) {
             t.left = bstInsert(x, t.left);
         } else {
@@ -329,6 +384,7 @@ public class Tree<E extends Comparable<? super E>> {
         }
         return t;
     }
+
 
     /**
      * Determines if item is in tree
@@ -353,7 +409,7 @@ public class Tree<E extends Comparable<? super E>> {
             return false;
 
         int compareResult = x.compareTo(t.element);
-
+        // search in the left or right
         if (compareResult < 0)
             return contains(x, t.left);
         else if (compareResult > 0)
@@ -362,6 +418,8 @@ public class Tree<E extends Comparable<? super E>> {
             return true;    // Match
         }
     }
+
+
     /**
      * Remove all paths from tree that sum to less than given value
      * @param sum: minimum path sum allowed in final tree
@@ -402,6 +460,17 @@ public class Tree<E extends Comparable<? super E>> {
 
         root = buildTreeTraversals(inOrder, preOrder, 0, inOrder.length - 1, 0);
     }
+
+    /**
+     * Helper method to build a Binary Tree from inOrder and preOrder traversals.
+     *
+     * @param inOrder  List of tree nodes in inorder traversal.
+     * @param preOrder List of tree nodes in preorder traversal.
+     * @param inStart  Start index of the current subtree in inOrder traversal.
+     * @param inEnd    End index of the current subtree in inOrder traversal.
+     * @param preIndex Current index in preOrder traversal.
+     * @return Root node of the constructed subtree.
+     */
     private BinaryNode<E> buildTreeTraversals(E[] inOrder, E[] preOrder, int inStart, int inEnd, int preIndex) {
         if (inStart > inEnd || preIndex >= preOrder.length) {
             return null;
@@ -416,6 +485,16 @@ public class Tree<E extends Comparable<? super E>> {
 
         return node;
     }
+
+    /**
+     * Helper method for buildTreeTraversals
+     *
+     * @param arr   The array to search in.
+     * @param start Starting index for the search.
+     * @param end   Ending index for the search.
+     * @param value The value to find in the array.
+     * @return Index value if found, otherwise -1.
+     */
     private int findIndex(E[] arr, int start, int end, E value) {
         for (int i = start; i <= end; i++) {
             if (arr[i].equals(value)) {
@@ -426,33 +505,6 @@ public class Tree<E extends Comparable<? super E>> {
     }
 
 
-    /**
-     * Find the least common ancestor of two nodes
-     * @param a first node
-     * @param b second node
-     * @return String representation of ancestor
-     */
-    public BinaryNode<E> lca(BinaryNode<E> current,E a, E b) {
-    // Add return so I can run test
-        if (current == null) {
-            return null;
-        }
-
-        // Compare the values of the current node with the given nodes a and b
-        int compareA = a.compareTo(current.element);
-        int compareB = b.compareTo(current.element);
-
-        if (compareA < 0 && compareB < 0) {
-            // Both a and b are in the left subtree
-            return lca(current.left, a, b);
-        } else if (compareA > 0 && compareB > 0) {
-            // Both a and b are in the right subtree
-            return lca(current.right, a, b);
-        } else {
-            // Current node is the LCA, or one of the nodes is equal to the current node
-            return current;
-        }
-    }
     public Integer sumAll(){
         BinaryNode<Integer> r = (BinaryNode<Integer>) root;
         return sumAll(r);
@@ -467,6 +519,35 @@ public class Tree<E extends Comparable<? super E>> {
     }
 
     /**
+     * Find the least common ancestor of two nodes
+     * @param a first node
+     * @param b second node
+     * @return String representation of ancestor
+     */
+    public BinaryNode<E> lca(BinaryNode<E> current,E a, E b) {
+        if (current == null) {
+            return null;
+        }
+
+        // Compare the values of the current node with the given nodes a and b
+        int compareA = a.compareTo(current.element);
+        int compareB = b.compareTo(current.element);
+
+        if (compareA < 0 && compareB < 0) {
+            // a and b are in the left subtree
+            return lca(current.left, a, b);
+        } else if (compareA > 0 && compareB > 0) {
+            //a and b are in the right subtree
+            return lca(current.right, a, b);
+        } else {
+            // Current node is the LCA, or a,b is equal to the current node
+            return current;
+        }
+    }
+
+
+
+    /**
      * Balance the tree
      */
     public void balanceTree() {
@@ -477,6 +558,7 @@ public class Tree<E extends Comparable<? super E>> {
         // Build a balanced BST from the sorted elements
         root = buildBalancedBST(sortedElements, 0, sortedElements.size() - 1);
     }
+
     /**
      * Helper method for balanceTree
      * @param node current node traversal.
@@ -511,6 +593,7 @@ public class Tree<E extends Comparable<? super E>> {
         return newNode;
     }
 
+
     /**
      * In a BST, keep only nodes between range
      *
@@ -528,7 +611,7 @@ public class Tree<E extends Comparable<? super E>> {
      * @param current current node traversal.
      * @param a       lowest value
      * @param b       highest value
-     * @return the root of the tree after keeping only nodes between the range [a, b]
+     * @return tree  only nodes between the range [a, b]
      */
     private BinaryNode<E> keepRange(BinaryNode<E> current, E a, E b) {
         if (current == null) {
@@ -541,12 +624,15 @@ public class Tree<E extends Comparable<? super E>> {
         else if (current.element.compareTo(b) > 0) {
             return keepRange(current.left, a, b);
         }
+        // If current is in range
         else {
             current.left = keepRange(current.left, a, b);
             current.right = keepRange(current.right, a, b);
             return current;
         }
     }
+
+
     // Basic node stored in unbalanced binary  trees
     public static class BinaryNode<E> {
         E element;            // The data in the node
