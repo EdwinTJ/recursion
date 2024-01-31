@@ -78,6 +78,7 @@ public class Tree<E extends Comparable<? super E>> {
         else
             return treeName + "\n" + toString(root, "", true);
     }
+
     /**
      * Helper method to build the string tree
      * @param node BinaryNode<E>
@@ -99,6 +100,7 @@ public class Tree<E extends Comparable<? super E>> {
 
         return result.toString();
     }
+
     /**
      * Return a string displaying the tree contents as a single line
      */
@@ -111,7 +113,7 @@ public class Tree<E extends Comparable<? super E>> {
 
     /**
      * Internal method to return a string of items in the tree in order
-     * This routine runs in O(??)
+     * This routine runs in O(n)
      *
      * @param t the node that roots the subtree.
      */
@@ -126,7 +128,7 @@ public class Tree<E extends Comparable<? super E>> {
 
 
     /**
-     * The complexity of finding the deepest node is O(???)
+     * The complexity of finding the deepest node is O(n)
      * @return
      */
     public E deepestNode() {
@@ -181,7 +183,7 @@ public class Tree<E extends Comparable<? super E>> {
 
     /**
      * Counts number of nodes in specified level
-     * The complexity of nodesInLevel is O(???)
+     * The complexity of nodesInLevel is O(2^n)
      * @param level Level in tree, root is zero
      * @return count of number of nodes at specified level
      */
@@ -214,7 +216,7 @@ public class Tree<E extends Comparable<? super E>> {
 
     /**
      * Print all paths from root to leaves
-     * The complexity of printAllPaths is O(???)
+     * The complexity of printAllPaths is O(2^n)
      */
     public void printAllPaths() {
         printAllPaths(root, new ArrayList<>());
@@ -256,7 +258,7 @@ public class Tree<E extends Comparable<? super E>> {
     }
     /**
      * Counts all non-null binary search trees embedded in tree
-     *  The complexity of countBST is O(???)
+     *  The complexity of countBST is O(n)
      * @return Count of embedded binary search trees
      */
     public Integer countBST() {
@@ -365,35 +367,28 @@ public class Tree<E extends Comparable<? super E>> {
      * @param sum: minimum path sum allowed in final tree
      */
     public void pruneK(Integer sum) {
-        root = pruneK(root, 0, sum);
+        root = pruneK(root, sum);
     }
 
-    private BinaryNode<E> pruneK(BinaryNode<E> current, int currentSum, Integer targetSum) {
+    private BinaryNode<E> pruneK(BinaryNode<E> current, Integer sum) {
         if (current == null) {
             return null;
         }
 
-        // Update the current sum
-        currentSum += ((Integer) current.element);
+        // Calculate the sum for the current node
+        Integer currentSum = (Integer) current.element;
 
-        // Check if the current node is a leaf (both left and right children are null)
-        if (current.left == null && current.right == null) {
-            // If the current path sum is less than the target sum, remove the node
-            if (currentSum < targetSum) {
-                return null;
-            } else {
-                return current;
-            }
-        } else {
-            // Recursively prune the left and right subtrees
-            current.left = pruneK(current.left, currentSum, targetSum);
-            current.right = pruneK(current.right, currentSum, targetSum);
+        // Recursively prune the left and right subtrees
+        current.left = pruneK(current.left, sum - currentSum);
+        current.right = pruneK(current.right, sum - currentSum);
 
-            // Return the modified current node
-            return current;
+        // If the current node is a leaf and the sum is less than or equal to 0, prune it
+        if (current.left == null && current.right == null && sum > 0) {
+            return null;
         }
-    }
 
+        return current;
+    }
 
     /**
      * Build tree given inOrder and preOrder traversals.  Each value is unique
@@ -494,6 +489,7 @@ public class Tree<E extends Comparable<? super E>> {
             inOrderTraversal(node.right, elements);
         }
     }
+
     /**
      * Helper method for balanceTree
      * @param elements the list of sorted elements.
@@ -525,6 +521,7 @@ public class Tree<E extends Comparable<? super E>> {
         root = keepRange(root, a, b);
 
     }
+
     /**
      * Helper method for keepRange
      *
@@ -576,6 +573,4 @@ public class Tree<E extends Comparable<? super E>> {
         }
 
     }
-
-
 }
